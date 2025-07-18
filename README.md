@@ -1,5 +1,8 @@
-> **Test Case Descriptions** :
-Đây là mô tả ngắn gọn về các test case.
+**Link Slide mô tả dự án: https://www.canva.com/design/DAGtfO6kIY8/GZ7W0T8MRWNK-r-q223NCQ/edit?utm_content=DAGtfO6kIY8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton**
+
+
+**Test Case Descriptions: Đây là mô tả ngắn gọn về các test case.** 
+
 
 _LoginTest:
 
