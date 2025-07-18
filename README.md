@@ -1,5 +1,6 @@
 **Link Slide mô tả dự án: https://www.canva.com/design/DAGtfO6kIY8/GZ7W0T8MRWNK-r-q223NCQ/edit?utm_content=DAGtfO6kIY8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton**
 
+**Link Excel báo cáo dự án: https://docs.google.com/spreadsheets/d/1bKX5V6QXF-nGB0Y8xPG8g1n7RE_p6aKK5AgGL7l0x_4/edit?usp=sharing**
 
 **Test Case Descriptions: Đây là mô tả ngắn gọn về các test case.** 
 
