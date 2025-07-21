@@ -27,18 +27,14 @@ jobs:
         run: |
           powershell -Command "Set-ExecutionPolicy Bypass -Scope CurrentUser -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
-      - name: Install Edge WebDriver
+      - name: Install Edge WebDriver via Chocolatey
+        run: choco install microsoft-edge-driver -y
+        shell: powershell
+
+      - name: Add EdgeDriver to PATH
         run: |
-          try {
-            $version = (Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/LATEST_RELEASE" -UseBasicParsing -ErrorAction Stop).Content.Trim()
-            Write-Host "Latest version: $version"
-          } catch {
-            Write-Host "Failed to get latest version, using fallback version 123.0.2420.53"
-            $version = "123.0.2420.53"
-          }
-          Invoke-WebRequest -Uri "https://msedgedriver.azureedge.net/$version/edgedriver_win64.zip" -OutFile "edgedriver.zip" -ErrorAction Stop
-          Expand-Archive -Path "edgedriver.zip" -DestinationPath "$env:LOCALAPPDATA" -Force
-          $env:Path += ";$env:LOCALAPPDATA"
+          $edgePath = (Get-Command msedgedriver.exe).Source
+          $env:Path += ";" + [System.IO.Path]::GetDirectoryName($edgePath)
         shell: powershell
 
       - name: Restore dependencies
