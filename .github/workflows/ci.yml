@@ -34,13 +34,13 @@ jobs:
         shell: powershell
 
       - name: Restore dependencies
-        run: dotnet restore ProjectSlenium.csproj
+        run: dotnet restore ProjectSlenium/ProjectSlenium.csproj
 
       - name: Build
-        run: dotnet build ProjectSlenium.csproj --configuration Release --no-restore
+        run: dotnet build ProjectSlenium/ProjectSlenium.csproj --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test ProjectSlenium.csproj --configuration Release --no-build --logger "trx" --results-directory ./TestResults
+        run: dotnet test ProjectSlenium/ProjectSlenium.csproj --configuration Release --no-build --logger "trx" --results-directory ./TestResults
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
