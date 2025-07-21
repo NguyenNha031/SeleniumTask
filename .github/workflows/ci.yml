@@ -38,15 +38,15 @@ jobs:
         run: dotnet test --configuration Release --no-build --logger "trx" --results-directory ./TestResults
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
-        if: success() || failure()
-        with:
-          name: test-results
-          path: ./TestResults/
+  uses: actions/upload-artifact@v4
+  if: success() || failure()
+  with:
+    name: test-results
+    path: ./TestResults/
 
-      - name: Archive ExtentReports
-        uses: actions/upload-artifact@v3
-        if: success() || failure()
-        with:
-          name: extent-reports
-          path: ./Reports/
+- name: Archive ExtentReports
+  uses: actions/upload-artifact@v4
+  if: success() || failure()
+  with:
+    name: extent-reports
+    path: ./Reports/
