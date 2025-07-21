@@ -33,20 +33,17 @@ namespace ProjectSlenium.TestCase
                 string title = "Đây là project Test4";
                 string priority = "Normal";
                 string summary = "Test Project 112312323";
-
                 //Thực hiện việc mở trang Project từ Dashboard, sau đó xác minh 
                 test.Info("Điều hướng đến trang Project.");
                 dashboardPage.ProjectUser();
                 Assert.That(projectPage.IsProjectPageDisplayed(), Is.True, "Trang Project không hiển thị.");
                 test.Pass("✅ Trang Project đã hiển thị chính xác.");
-
                 //Thực hiện việc thêm Project mới 
                 test.Info("Thực hiện thêm mới dự án.");
                 projectPage.AddNewProject(title, priority, summary);
                 Thread.Sleep(3000);
                 test.Pass("✅ Đã thêm mới dự án thành công.");
                 Thread.Sleep(3000);
-
                 //THực hiện tìm kiếm Project sau đó kiểm tra xem dự án vừa tạo có tồn tại không
                 test.Info("Thực hiện tìm kiếm dự án.");
                 bool isProjectFound = projectPage.SearchNewProject(title);

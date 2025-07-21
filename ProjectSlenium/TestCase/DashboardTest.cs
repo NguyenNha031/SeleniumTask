@@ -25,7 +25,7 @@ namespace ProjectSlenium.TestCase
 
         [Test, Category("Dashboard")]
         [Description("Kiểm tra hiển thị các yếu tố chính trên trang Dashboard")]
-        public void VerifyDashboardElementsDisplay()
+        public void DashboardTestCase()
         {
             try
             {
