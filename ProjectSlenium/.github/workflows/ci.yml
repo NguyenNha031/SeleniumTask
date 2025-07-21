@@ -1,0 +1,50 @@
+﻿name: CI Pipeline for Selenium Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Install Edge WebDriver
+        run: choco install microsoft-edge-driver -y
+        env:
+          CHOCO_URL: https://chocolatey.org/install.ps1
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test --configuration Release --no-build --logger "trx" --results-directory ./TestResults
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: test-results
+          path: ./TestResults/
+
+      - name: Archive ExtentReports
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: extent-reports
+          path: ./Reports/
