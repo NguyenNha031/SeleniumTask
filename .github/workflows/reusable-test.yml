@@ -55,9 +55,13 @@ jobs:
         run: |
           mkdir -p site
           REPORT_DIR="./ProjectSlenium/bin/Debug/Reports"
+          echo "All files in report dir:"
+          ls -la "$REPORT_DIR"
+      
           LATEST_REPORT=$(ls -t "$REPORT_DIR"/*.html | head -n 1)
           echo "Latest report: $LATEST_REPORT"
           cp "$LATEST_REPORT" site/index.html
+
 
       - name: Deploy report to GitHub Pages
         if: github.ref == 'refs/heads/master'
