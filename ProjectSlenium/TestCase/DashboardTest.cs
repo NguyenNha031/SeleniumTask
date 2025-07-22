@@ -12,7 +12,6 @@ using System.Windows.Forms;
 namespace ProjectSlenium.TestCase
 {
     [TestFixture]
-    [Explicit]
     public class DashboardTest : BaseTest
     {
         private DashboardPage dashboardPage;

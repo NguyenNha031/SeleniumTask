@@ -10,7 +10,6 @@ using AventStack.ExtentReports;
 namespace ProjectSlenium.TestCase
 {
     [TestFixture]
-    [Explicit]
     public class RequestsTest : BaseTest
     {
         private DashboardPage dashboardPage;
