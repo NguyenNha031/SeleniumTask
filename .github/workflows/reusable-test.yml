@@ -58,7 +58,8 @@ jobs:
           echo "All files in report dir:"
           ls -la "$REPORT_DIR"
       
-          LATEST_REPORT=$(ls -t "$REPORT_DIR"/*.html | head -n 1)
+          LATEST_REPORT=$(find "$REPORT_DIR" -name "*.html" -printf "%T@ %p\n" | sort -n | tail -1 | cut -d' ' -f2-)
+
           echo "Latest report: $LATEST_REPORT"
           cp "$LATEST_REPORT" site/index.html
 
