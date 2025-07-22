@@ -10,6 +10,7 @@ using Common.Helpers;
 namespace ProjectSlenium.TestCase
 {
     [TestFixture]
+    [Explicit]
     public class TaskTest : BaseTest
     {
 

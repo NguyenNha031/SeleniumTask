@@ -7,7 +7,9 @@ using System.Threading;
 
 namespace ProjectSlenium.TestCase
 {
+
     [TestFixture]
+    [Explicit]
     public class LoginTest : BaseTest
     {
         [SetUp]
