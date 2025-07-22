@@ -54,11 +54,21 @@ jobs:
         if: success() || failure()
         with:
           name: extent-reports
-          path: ./Reports/
+          path: ./ProjectSlenium/bin/Debug/Reports/
+
+      - name: Prepare latest report for GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        shell: bash
+        run: |
+          mkdir -p site
+          REPORT_DIR="./ProjectSlenium/bin/Debug/Reports"
+          LATEST_REPORT=$(ls -t "$REPORT_DIR"/*.html | head -n 1)
+          echo "📄 Latest report: $LATEST_REPORT"
+          cp "$LATEST_REPORT" site/index.html
 
       - name: Deploy report to GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Reports
+          publish_dir: ./site
