@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace ProjectSlenium.TestCase
 {
     [TestFixture]
-    [Explicit]
+    [Parallelizable(ParallelScope.Self)]
     public class ProfileTest : BaseTest
     {
         private DashboardPage dashboardPage;
