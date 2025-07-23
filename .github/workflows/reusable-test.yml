@@ -14,7 +14,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "6.0.x"
+          dotnet-version: ["8.0.x"]
 
       - name: Setup Chocolatey
         run: |
@@ -51,18 +51,23 @@ jobs:
 
       - name: Prepare latest report for GitHub Pages
         if: github.ref == 'refs/heads/master'
-        shell: bash
+        shell: pwsh
         run: |
-          mkdir -p site
-          REPORT_DIR="./ProjectSlenium/bin/Debug/Reports"
-          echo "All files in report dir:"
-          ls -la "$REPORT_DIR"
-      
-          LATEST_REPORT=$(find "$REPORT_DIR" -name "*.html" -printf "%T@ %p\n" | sort -n | tail -1 | cut -d' ' -f2-)
+          $reportDir = "./ProjectSlenium/bin/Debug/Reports"
+          New-Item -ItemType Directory -Force -Path site
 
-          echo "Latest report: $LATEST_REPORT"
-          cp "$LATEST_REPORT" site/index.html
+          Write-Host "All files in report dir:"
+          Get-ChildItem $reportDir -Recurse
 
+          $latestReport = Get-ChildItem $reportDir -Filter *.html -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+
+          if ($latestReport) {
+            Copy-Item $latestReport.FullName -Destination "site/index.html"
+            Write-Host "Copied latest report: $($latestReport.FullName)"
+          } else {
+            Write-Host "No .html report found."
+            exit 1
+          }
 
       - name: Deploy report to GitHub Pages
         if: github.ref == 'refs/heads/master'
