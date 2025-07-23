@@ -59,7 +59,8 @@ jobs:
           Write-Host "All files in report dir:"
           Get-ChildItem $reportDir -Recurse
 
-          $latestReport = Get-ChildItem $reportDir -Filter *.html -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          $latestReport = Get-ChildItem $reportDir -Filter *.html -Recurse | Sort-Object CreationTimeUtc -Descending | Select-Object -First 1
+
 
           if ($latestReport) {
             Copy-Item $latestReport.FullName -Destination "site/index.html"
