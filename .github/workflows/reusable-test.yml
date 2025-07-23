@@ -57,10 +57,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path site
 
           Write-Host "All files in report dir:"
-          Get-ChildItem $reportDir -Recurse
+          Get-ChildItem $reportDir -Filter *.html | ForEach-Object { $_.Name }
 
-          $latestReport = Get-ChildItem $reportDir -Filter *.html -Recurse | Sort-Object CreationTimeUtc -Descending | Select-Object -First 1
-
+          # Sắp xếp theo tên (giả định tên chứa thời gian)
+          $latestReport = Get-ChildItem $reportDir -Filter *.html | Sort-Object Name -Descending | Select-Object -First 1
 
           if ($latestReport) {
             Copy-Item $latestReport.FullName -Destination "site/index.html"
