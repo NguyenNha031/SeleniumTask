@@ -8,8 +8,8 @@ using System.Threading;
 namespace ProjectSlenium.TestCase
 {
 
+    [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Explicit]
     public class LoginTest : BaseTest
     {
         [SetUp]

@@ -9,6 +9,7 @@ using AventStack.ExtentReports;
 
 namespace ProjectSlenium.TestCase
 {
+    [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     public class RequestsTest : BaseTest
     {

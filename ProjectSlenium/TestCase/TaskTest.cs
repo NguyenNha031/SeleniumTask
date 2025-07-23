@@ -9,8 +9,8 @@ using AventStack.ExtentReports;
 using Common.Helpers;
 namespace ProjectSlenium.TestCase
 {
+    [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Explicit]
     public class TaskTest : BaseTest
     {
 

@@ -205,7 +205,6 @@
     <Compile Include="TestCase\ProfileTest.cs" />
     <Compile Include="TestCase\ProjectTest.cs" />
     <Compile Include="TestCase\TaskTest.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

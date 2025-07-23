@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 namespace ProjectSlenium.TestCase
 {
+    [Parallelizable(ParallelScope.Self)]
     [TestFixture]
-    [Explicit]
     public class DashboardTest : BaseTest
     {
         private DashboardPage dashboardPage;

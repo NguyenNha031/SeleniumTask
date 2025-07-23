@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSlenium.Pages
 {
+
     public class ProfilePage
     {
 

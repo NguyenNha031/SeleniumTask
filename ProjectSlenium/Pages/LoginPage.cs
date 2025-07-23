@@ -6,6 +6,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace TesterSetUp.Pages
 {
+
     public class LoginPage
     {
         private readonly IWebDriver _driver;
