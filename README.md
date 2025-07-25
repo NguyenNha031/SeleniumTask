@@ -4,7 +4,7 @@
 
 **Link Excel báo cáo dự án: https://docs.google.com/spreadsheets/d/1bKX5V6QXF-nGB0Y8xPG8g1n7RE_p6aKK5AgGL7l0x_4/edit?usp=sharing**
 
-**Test Case Descriptions: Đây là mô tả ngắn gọn về các test case.** 
+**Test Case Descriptions: Đây là mô tả ngắn gọn về các test case .** 
 
 
 _LoginTest:
