@@ -144,6 +144,11 @@ namespace Common.Helpers
             Actions actions = new Actions(_driver);
             actions.MoveToElement(element).Perform();
         }
+        public void ClearText(IWebElement element)
+        {
+            element.Clear();
+        }
+
 
         // Hàm: SelectOptionByText
         // Chức năng: Chọn một tùy chọn trong dropdown dựa trên văn bản hiển thị

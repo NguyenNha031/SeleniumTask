@@ -3,6 +3,8 @@ using Common.Helpers; // Giả sử ValidateHelper nằm ở đây
 using System;
 using OpenQA.Selenium.Support.UI;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace TesterSetUp.Pages
 {
@@ -56,7 +58,7 @@ namespace TesterSetUp.Pages
             _validateHelper.ClickElement(LoginButton);
 
         }
-        public String getTextError()
+        public string getTextError()
         {
             try
             {
@@ -79,6 +81,14 @@ namespace TesterSetUp.Pages
             _validateHelper.ClickElement(BtnSignout);
 
         }
+    
+        public void ClearLoginForm()
+        {
+            _validateHelper.ClearText(EmailField);
+            _validateHelper.ClearText(PasswordField);
+        }
+
+
 
 
         // --- Verifications ---
