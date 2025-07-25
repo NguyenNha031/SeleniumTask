@@ -1,36 +1,45 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
 using System;
-using System.Threading;
 
 namespace SimpleAppium.Drivers
 {
-    public class DriverFactory
+    public static class DriverFactory
     {
-        private static ThreadLocal<IWebDriver> driver = new ThreadLocal<IWebDriver>();
+        [ThreadStatic]
+        private static IWebDriver driver;
 
-        public static IWebDriver GetDriver()
+        public static IWebDriver GetDriver(string browserName)
         {
-            if (!driver.IsValueCreated || driver.Value == null)
+            if (driver == null)
             {
-                var options = new EdgeOptions();
-                options.AddArgument("start-maximized");
-                driver.Value = new EdgeDriver(options);
+                switch (browserName.ToLower())
+                {
+                    case "chrome":
+                        driver = new ChromeDriver();
+                        break;
+                    case "firefox":
+                        driver = new FirefoxDriver();
+                        break;
+                    case "edge":
+                        driver = new EdgeDriver();
+                        break;
+                    default:
+                        throw new ArgumentException($"⚠️ Browser '{browserName}' is not supported.");
+                }
+
+                driver.Manage().Window.Maximize();
             }
 
-            return driver.Value;
+            return driver;
         }
-
 
         public static void QuitDriver()
         {
-            if (driver.IsValueCreated && driver.Value != null)
-            {
-                driver.Value.Quit();
-                driver.Dispose();
-                driver = new ThreadLocal<IWebDriver>(); 
-            }
+            driver?.Quit();
+            driver = null;
         }
-
     }
 }

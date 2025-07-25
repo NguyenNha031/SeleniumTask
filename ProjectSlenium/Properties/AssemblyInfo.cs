@@ -20,4 +20,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: Parallelizable(ParallelScope.All)]
-[assembly: LevelOfParallelism(4)]
+[assembly: LevelOfParallelism(5)]

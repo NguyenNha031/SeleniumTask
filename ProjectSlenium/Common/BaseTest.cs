@@ -6,7 +6,6 @@ using ProjectSlenium.Pages;
 using SimpleAppium.Drivers;
 using System;
 using System.IO;
-using System.Threading;
 using TesterSetUp.Pages;
 
 namespace ProjectSlenium.Common
@@ -16,7 +15,7 @@ namespace ProjectSlenium.Common
         protected IWebDriver driver;
         protected ExtentReports extent;
         protected ExtentTest test;
-        protected LoginPage loginPage; 
+        protected LoginPage loginPage;
 
         [OneTimeSetUp]
         public void SetupReporting()
@@ -28,14 +27,19 @@ namespace ProjectSlenium.Common
         [SetUp]
         public void SetUpTest()
         {
-            driver = DriverFactory.GetDriver();
+            // 👉 Nhận browser từ biến môi trường (dùng được cho cả local & CI/CD)
+            string browser = Environment.GetEnvironmentVariable("BROWSER") ?? "chrome";
+            Console.WriteLine($"🌐 Browser selected: {browser}");
+
+            driver = DriverFactory.GetDriver(browser);
+
             Console.WriteLine("🧪 Test started: " + TestContext.CurrentContext.Test.Name);
             test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             loginPage = new LoginPage(driver);
         }
+
         protected void LoginAsAdmin()
         {
-
             loginPage = new LoginPage(driver);
             test.Info("Thực hiện đăng nhập để truy cập trang.");
             loginPage.GoToLoginPage();
@@ -49,7 +53,6 @@ namespace ProjectSlenium.Common
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
 
-          
             if (loginPage.IsLoginSuccessful())
             {
                 try
@@ -60,7 +63,7 @@ namespace ProjectSlenium.Common
                 }
                 catch (Exception ex)
                 {
-                    test.Log(Status.Warning, $"⚠️ Lỗi trong quá trình đăng xuất: {ex.Message}");
+                    test.Warning($"⚠️ Lỗi trong quá trình đăng xuất: {ex.Message}");
                 }
             }
 

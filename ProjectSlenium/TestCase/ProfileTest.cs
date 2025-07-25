@@ -9,8 +9,8 @@ using System.Threading;
 using System.Windows.Forms;
 namespace ProjectSlenium.TestCase
 {
-    [TestFixture]
     [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
     public class ProfileTest : BaseTest
     {
         private DashboardPage dashboardPage;

@@ -5,7 +5,14 @@ on:
 
 jobs:
   build-and-test:
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge] # ✅ chạy song song 3 trình duyệt
+
     runs-on: windows-latest
+
+    env:
+      BROWSER: ${{ matrix.browser }} # ✅ truyền biến môi trường BROWSER
 
     steps:
       - name: Checkout code
@@ -20,7 +27,8 @@ jobs:
         run: |
           powershell -Command "Set-ExecutionPolicy Bypass -Scope CurrentUser -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
-      - name: Add EdgeDriver to PATH
+      - name: Add EdgeDriver to PATH (for Edge only)
+        if: matrix.browser == 'edge'
         run: |
           $env:Path += ";$PWD/tools/edgedriver"
           Write-Host "Added EdgeDriver to PATH"
@@ -32,25 +40,25 @@ jobs:
       - name: Build
         run: dotnet build ProjectSlenium/ProjectSlenium.csproj --configuration Release --no-restore
 
-      - name: Run tests
-        run: dotnet test ProjectSlenium/ProjectSlenium.csproj --configuration Release --no-build --logger "trx" --results-directory ./TestResults
+      - name: Run tests (${{ matrix.browser }})
+        run: dotnet test ProjectSlenium/ProjectSlenium.csproj --configuration Release --no-build --logger "trx" --results-directory ./TestResults/${{ matrix.browser }}
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: test-results
-          path: ./TestResults/
+          name: test-results-${{ matrix.browser }}
+          path: ./TestResults/${{ matrix.browser }}/
 
       - name: Archive ExtentReports
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: extent-reports
+          name: extent-reports-${{ matrix.browser }}
           path: ./ProjectSlenium/bin/Debug/Reports/
 
       - name: Prepare latest report for GitHub Pages
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && matrix.browser == 'chrome'
         shell: pwsh
         run: |
           $reportDir = "./ProjectSlenium/bin/Debug/Reports"
@@ -67,7 +75,7 @@ jobs:
           }
 
       - name: Deploy report to GitHub Pages
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && matrix.browser == 'chrome'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
